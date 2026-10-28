@@ -1,0 +1,8 @@
+<a class="card" href="/products/<%= p.id %>">
+  <img src="<%= p.image %>" alt="<%= p.name %>" loading="lazy">
+  <div class="card-body">
+    <span class="muted"><%= p.category_name %></span>
+    <h3><%= p.name %></h3>
+    <span class="price"><%= money(p.price) %></span>
+  </div>
+</a>

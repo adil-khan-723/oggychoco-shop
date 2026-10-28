@@ -1,0 +1,94 @@
+<%- include('../partials/header') %>
+
+<div class="row-between">
+  <h1>Analytics</h1>
+  <form action="/admin/analytics" method="get" class="date-form">
+    <input type="date" name="day" value="<%= day %>">
+    <button type="submit" class="btn small">Show</button>
+    <% if (!isToday) { %><a href="/admin/analytics">Today</a><% } %>
+  </form>
+</div>
+
+<div class="stats">
+  <div class="stat">
+    <span class="num"><%= visitors %></span>
+    <span class="label"><%= isToday ? 'Visitors today' : 'Visitors' %></span>
+    <span class="muted">unique visitors</span>
+  </div>
+  <div class="stat">
+    <span class="num"><%= peak ? peak.n : 0 %></span>
+    <span class="label">Peak concurrent users</span>
+    <span class="muted"><%= peak ? 'at ' + peak.at : 'no traffic recorded' %></span>
+  </div>
+  <div class="stat">
+    <span class="num"><%= buyers %></span>
+    <span class="label">Users who bought</span>
+    <span class="muted"><%= orders %> orders, <%= money(revenue) %></span>
+  </div>
+  <% if (isToday) { %>
+    <div class="stat">
+      <span class="num"><%= activeNow %></span>
+      <span class="label">Active right now</span>
+      <span class="muted">seen in the last 5 minutes</span>
+    </div>
+  <% } %>
+</div>
+
+<h2>Visitors through the day</h2>
+<% if (chart.max === 0) { %>
+  <p class="muted">No traffic recorded <%= isToday ? 'yet today' : 'on this day' %>.</p>
+<% } else { %>
+  <%
+    var W = 960, H = 200;
+    var n = chart.buckets.length;
+    var bw = W / n;
+    var step = Math.max(1, Math.ceil(n / 10));
+  %>
+  <div class="chart-wrap">
+    <svg class="chart" viewBox="0 0 <%= W %> <%= H + 24 %>" role="img" aria-label="Active visitors in each <%= chart.bucketMinutes %> minutes">
+      <line x1="0" y1="0" x2="<%= W %>" y2="0" class="grid"></line>
+      <text x="4" y="12"><%= chart.max %></text>
+      <% chart.buckets.forEach(function (b, i) {
+           var h = Math.round(b.active / chart.max * H); %>
+        <% if (h > 0) { %>
+          <rect x="<%= (i * bw).toFixed(1) %>" y="<%= H - h %>" width="<%= Math.max(bw - 1, 1).toFixed(1) %>" height="<%= h %>" class="bar<%= b.peak ? ' peak' : '' %>">
+            <title><%= b.label %>: <%= b.active %> active visitors, <%= b.views %> page views</title>
+          </rect>
+        <% } %>
+        <% if (i % step === 0) { %><text x="<%= (i * bw).toFixed(1) %>" y="<%= H + 16 %>"><%= b.label %></text><% } %>
+      <% }); %>
+      <line x1="0" y1="<%= H %>" x2="<%= W %>" y2="<%= H %>" class="grid"></line>
+    </svg>
+  </div>
+  <p class="muted">Each bar is the most distinct visitors seen within a <%= chart.bucketMinutes %>-minute window. The purple bar is the peak. Hover a bar for the exact numbers.</p>
+<% } %>
+
+<h2>Last 14 days</h2>
+<div class="table-wrap">
+  <table class="table">
+    <thead>
+      <tr><th>Day</th><th>Visitors</th><th>Peak concurrent</th><th>Page views</th><th>Buyers</th><th>Orders</th><th>Revenue</th></tr>
+    </thead>
+    <tbody>
+      <% days.forEach(function (d) { %>
+        <tr<% if (d.day === day) { %> class="selected"<% } %>>
+          <td><a href="/admin/analytics?day=<%= d.day %>"><%= d.day %></a></td>
+          <td><%= d.visitors %></td>
+          <td><%= d.peak %></td>
+          <td><%= d.views %></td>
+          <td><%= d.buyers %></td>
+          <td><%= d.orders %></td>
+          <td><%= money(d.revenue) %></td>
+        </tr>
+      <% }); %>
+    </tbody>
+  </table>
+</div>
+
+<p class="muted">
+  Times are server time (<%= tz %>). A visitor is one IP address, stored only as a one-way hash, so people sharing a network count once.
+  Concurrent users are the distinct visitors seen in the last 5 minutes. Admin pages and images are not counted.
+  Buyers are unique emails on paid orders.
+</p>
+
+<%- include('../partials/footer') %>

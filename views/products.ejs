@@ -1,0 +1,26 @@
+<%- include('partials/header') %>
+
+<h1>Products</h1>
+
+<form class="filters" method="get" action="/products">
+  <input type="search" name="q" value="<%= q %>" placeholder="Search products">
+  <select name="category">
+    <option value="">All categories</option>
+    <% categories.forEach(function (c) { %>
+      <option value="<%= c.slug %>" <%= category === c.slug ? 'selected' : '' %>><%= c.name %></option>
+    <% }); %>
+  </select>
+  <button type="submit" class="btn">Filter</button>
+</form>
+
+<% if (products.length === 0) { %>
+  <p class="muted">No products found.</p>
+<% } else { %>
+  <div class="grid">
+    <% products.forEach(function (p) { %>
+      <%- include('partials/product-card', { p: p }) %>
+    <% }); %>
+  </div>
+<% } %>
+
+<%- include('partials/footer') %>

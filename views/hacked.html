@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HACKED</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #020a02; color: #25ff5a; font-family: "Courier New", Consolas, monospace; min-height: 100vh; }
+  body::before { content: ""; position: fixed; inset: 0; pointer-events: none;
+    background: repeating-linear-gradient(0deg, rgba(0,0,0,.25) 0, rgba(0,0,0,.25) 1px, transparent 1px, transparent 3px); }
+  .wrap { max-width: 860px; margin: 0 auto; padding: 2.5rem 1rem 4rem; }
+  .skull { white-space: pre; text-align: center; line-height: 1.1; font-size: clamp(8px, 2.2vw, 15px); color: #ff2b2b; text-shadow: 0 0 8px #ff2b2b; }
+  h1 { text-align: center; font-size: clamp(1.6rem, 6vw, 3rem); letter-spacing: .15em; margin: 1.2rem 0 .3rem; color: #ff2b2b; text-shadow: 0 0 12px #ff2b2b; animation: flicker 2.5s infinite; }
+  .sub { text-align: center; margin: 0 0 2rem; color: #9cffb4; }
+  .box { border: 1px solid #25ff5a; padding: 1rem 1.2rem; margin: 1.2rem 0; background: rgba(0, 40, 10, .45); box-shadow: 0 0 14px rgba(37,255,90,.25); }
+  .box h2 { margin: 0 0 .6rem; font-size: 1rem; color: #fff; }
+  .box h2::before { content: "> "; color: #25ff5a; }
+  ul { margin: 0; padding-left: 1.2rem; }
+  li { margin: .35rem 0; }
+  .bad { color: #ff5c5c; }
+  .cursor::after { content: "_"; animation: blink 1s steps(1) infinite; }
+  .notice { margin-top: 2.5rem; padding: .8rem 1rem; border: 1px dashed #777; color: #bbb; font-size: .85rem; background: #0b0b0b; }
+  .notice a { color: #25ff5a; }
+  @keyframes blink { 50% { opacity: 0; } }
+  @keyframes flicker { 0%, 92%, 100% { opacity: 1; } 93% { opacity: .55; } 95% { opacity: 1; } 97% { opacity: .7; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="skull">
+   ______
+  /      \
+ | () () |
+  \  ^   /
+   |||||||
+   |||||||
+</div>
+
+<h1>YOUR WEBSITE HAS BEEN HACKED</h1>
+<p class="sub">oggychoco.website :: access level: root :: status: <span class="bad">OWNED</span></p>
+
+<div class="box">
+  <h2>what I found while I was in here</h2>
+  <ul>
+    <li><span class="bad">[!]</span> SSH is open to the entire internet. Anyone can knock on the door.</li>
+    <li><span class="bad">[!]</span> No CSRF tokens. I can make your users do things they never meant to.</li>
+    <li><span class="bad">[!]</span> Unlimited login guesses. No lockout, no delay, nobody watching.</li>
+    <li><span class="bad">[!]</span> Session cookies missing <b>Secure</b> and <b>SameSite</b>.</li>
+    <li><span class="bad">[!]</span> No security headers. No HSTS, no CSP, no frame protection.</li>
+    <li><span class="bad">[!]</span> Server software and versions announced to everyone who asks.</li>
+    <li><span class="bad">[!]</span> Everything lives on a single server. One box, one point of failure.</li>
+    <li><span class="bad">[!]</span> Sessions, uploads and logs stored on local disk and in memory. Restart it and they're gone.</li>
+  </ul>
+</div>
+
+<div class="box">
+  <h2>what I did</h2>
+  <ul>
+    <li>Replaced your home page. That's it. I'm feeling generous today.</li>
+    <li>Left a note so you'd know how I got in.</li>
+  </ul>
+</div>
+
+<div class="box">
+  <h2>how to get me out</h2>
+  <ul>
+    <li>Lock SSH down to your own IP, or use Session Manager.</li>
+    <li>Add CSRF protection and rate limiting.</li>
+    <li>Harden cookies and headers.</li>
+    <li>Put it behind a load balancer and stop trusting one machine.</li>
+  </ul>
+</div>
+
+<p class="cursor">root@oggychoco:~# whoami</p>
+
+<div class="notice">
+  This is a <b>simulated defacement</b>, put up by the site owner as a security-awareness demo on their own test site.
+  Nothing was stolen, no visitor data was touched, and nobody else was involved.
+  <a href="/products">Continue to the shop &rarr;</a>
+</div>
+</div>
+</body>
+</html>

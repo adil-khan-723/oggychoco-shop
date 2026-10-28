@@ -1,0 +1,27 @@
+<%- include('partials/header') %>
+
+<section class="hero">
+  <h1>Good things for everyday life</h1>
+  <p>Electronics, clothing, home essentials and books at honest prices.</p>
+  <a class="btn" href="/products">Shop now</a>
+</section>
+
+<section>
+  <h2>Shop by category</h2>
+  <div class="pills">
+    <% categories.forEach(function (c) { %>
+      <a class="pill" href="/products?category=<%= c.slug %>"><%= c.name %></a>
+    <% }); %>
+  </div>
+</section>
+
+<section>
+  <h2>Featured products</h2>
+  <div class="grid">
+    <% featured.forEach(function (p) { %>
+      <%- include('partials/product-card', { p: p }) %>
+    <% }); %>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

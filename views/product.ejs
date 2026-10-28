@@ -1,0 +1,22 @@
+<%- include('partials/header') %>
+
+<p><a href="/products?category=<%= product.category_slug %>">&larr; Back to <%= product.category_name %></a></p>
+
+<section class="detail">
+  <img src="<%= product.image %>" alt="<%= product.name %>">
+  <div>
+    <h1><%= product.name %></h1>
+    <p class="muted"><%= product.category_name %></p>
+    <p class="price big"><%= money(product.price) %></p>
+    <p><%= product.description %></p>
+    <form action="/cart/add" method="post" class="add-form">
+      <input type="hidden" name="productId" value="<%= product.id %>">
+      <label>Qty
+        <input type="number" name="quantity" value="1" min="1" max="99">
+      </label>
+      <button type="submit" class="btn">Add to cart</button>
+    </form>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

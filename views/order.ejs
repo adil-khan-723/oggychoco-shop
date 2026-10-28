@@ -1,0 +1,23 @@
+<%- include('partials/header') %>
+
+<h1>Thank you for your order!</h1>
+<p>Order <strong>#<%= order.id %></strong> is <strong><%= order.status %></strong>. A confirmation will be sent to <%= order.email %>.</p>
+
+<div class="table-wrap">
+  <table class="table">
+    <thead><tr><th>Item</th><th>Qty</th><th>Price</th></tr></thead>
+    <tbody>
+      <% items.forEach(function (i) { %>
+        <tr><td><%= i.name %></td><td><%= i.quantity %></td><td><%= money(i.price) %></td></tr>
+      <% }); %>
+    </tbody>
+  </table>
+</div>
+<p class="total">Total: <strong><%= money(order.total) %></strong></p>
+
+<h2>Shipping to</h2>
+<p><%= order.name %><br><%= order.address %><br><%= order.city %> <%= order.postal_code %></p>
+
+<a class="btn" href="/products">Continue shopping</a>
+
+<%- include('partials/footer') %>

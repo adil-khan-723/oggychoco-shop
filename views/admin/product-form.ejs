@@ -1,0 +1,39 @@
+<%- include('../partials/header') %>
+
+<h1><%= product.id ? 'Edit product' : 'Add product' %></h1>
+
+<form action="<%= product.id ? '/admin/products/' + product.id : '/admin/products' %>" method="post" enctype="multipart/form-data" class="form">
+  <% if (error) { %><p class="alert"><%= error %></p><% } %>
+  <label>Name
+    <input type="text" name="name" value="<%= product.name %>" required>
+  </label>
+  <label>Category
+    <select name="category_id" required>
+      <option value="">Choose...</option>
+      <% categories.forEach(function (c) { %>
+        <option value="<%= c.id %>" <%= Number(product.category_id) === c.id ? 'selected' : '' %>><%= c.name %></option>
+      <% }); %>
+    </select>
+  </label>
+  <label>Price
+    <input type="number" name="price" step="0.01" min="0" value="<%= product.price %>" required>
+  </label>
+  <label>Description
+    <textarea name="description" rows="5"><%= product.description %></textarea>
+  </label>
+  <% if (product.image) { %>
+    <p>Current image:<br><img class="thumb big" src="<%= product.image %>" alt=""></p>
+  <% } %>
+  <label>Image
+    <input type="file" name="image" accept="image/*">
+  </label>
+  <label class="check">
+    <input type="checkbox" name="featured" value="1" <%= product.featured ? 'checked' : '' %>> Featured on home page
+  </label>
+  <div class="actions">
+    <button type="submit" class="btn">Save</button>
+    <a href="/admin/products">Cancel</a>
+  </div>
+</form>
+
+<%- include('../partials/footer') %>

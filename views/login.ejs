@@ -1,0 +1,18 @@
+<%- include('partials/header') %>
+
+<h1>Login</h1>
+
+<form action="/login" method="post" class="form narrow">
+  <% if (error) { %><p class="alert"><%= error %></p><% } %>
+  <input type="hidden" name="next" value="<%= next %>">
+  <label>Email or username
+    <input type="text" name="email" value="<%= email %>" autocomplete="username" required>
+  </label>
+  <label>Password
+    <input type="password" name="password" required>
+  </label>
+  <button type="submit" class="btn">Login</button>
+  <p class="muted">No account? <a href="/register?next=<%= encodeURIComponent(next) %>">Register</a></p>
+</form>
+
+<%- include('partials/footer') %>

@@ -1,0 +1,49 @@
+<%- include('partials/header') %>
+
+<h1>Your cart</h1>
+
+<% if (items.length === 0) { %>
+  <p class="muted">Your cart is empty.</p>
+  <a class="btn" href="/products">Browse products</a>
+<% } else { %>
+  <div class="table-wrap">
+    <table class="table">
+      <thead>
+        <tr><th>Product</th><th>Price</th><th>Qty</th><th>Subtotal</th><th></th></tr>
+      </thead>
+      <tbody>
+        <% items.forEach(function (i) { %>
+          <tr>
+            <td>
+              <a class="cart-product" href="/products/<%= i.id %>">
+                <img src="<%= i.image %>" alt="">
+                <span><%= i.name %></span>
+              </a>
+            </td>
+            <td><%= money(i.price) %></td>
+            <td>
+              <form action="/cart/update" method="post" class="qty-form">
+                <input type="hidden" name="productId" value="<%= i.id %>">
+                <input type="number" name="quantity" value="<%= i.quantity %>" min="0" max="99">
+                <button type="submit" class="btn small">Update</button>
+              </form>
+            </td>
+            <td><%= money(i.subtotal) %></td>
+            <td>
+              <form action="/cart/remove" method="post">
+                <input type="hidden" name="productId" value="<%= i.id %>">
+                <button type="submit" class="link-btn danger">Remove</button>
+              </form>
+            </td>
+          </tr>
+        <% }); %>
+      </tbody>
+    </table>
+  </div>
+  <div class="cart-total">
+    <p>Total: <strong><%= money(total) %></strong></p>
+    <a class="btn" href="/checkout">Checkout</a>
+  </div>
+<% } %>
+
+<%- include('partials/footer') %>

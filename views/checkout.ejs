@@ -1,0 +1,39 @@
+<%- include('partials/header') %>
+
+<h1>Checkout</h1>
+
+<div class="two-col">
+  <form action="/checkout" method="post" class="form">
+    <h2>Shipping details</h2>
+    <% if (error) { %><p class="alert"><%= error %></p><% } %>
+    <label>Full name
+      <input type="text" name="name" value="<%= form.name %>" required>
+    </label>
+    <label>Email
+      <input type="email" name="email" value="<%= form.email %>" required>
+    </label>
+    <label>Address
+      <input type="text" name="address" value="<%= form.address %>" required>
+    </label>
+    <label>City
+      <input type="text" name="city" value="<%= form.city %>" required>
+    </label>
+    <label>Postal code
+      <input type="text" name="postal_code" value="<%= form.postal_code %>" required>
+    </label>
+    <p class="muted">Payment is simulated. No card details are needed.</p>
+    <button type="submit" class="btn">Place order</button>
+  </form>
+
+  <aside class="summary">
+    <h2>Order summary</h2>
+    <ul class="plain">
+      <% items.forEach(function (i) { %>
+        <li><span><%= i.quantity %> &times; <%= i.name %></span> <span><%= money(i.subtotal) %></span></li>
+      <% }); %>
+    </ul>
+    <p class="total">Total: <strong><%= money(total) %></strong></p>
+  </aside>
+</div>
+
+<%- include('partials/footer') %>
